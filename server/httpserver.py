@@ -20,6 +20,7 @@ class Server:
         :param port: port to connection
         """
         self.application = application
+        # factory socket
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # create a new socket object
         # flag tells the kernel to reuse a local socket in TIME_WAIT state,
         # without waiting for its natural timeout to expire.
@@ -61,9 +62,9 @@ class Server:
         while True:
             print "waiting request..."
 
-            self.socket.listen(3)  # maximum number of connections
+            self.socket.listen(5)  # maximum number of connections
 
-            # socket to client and clients address
+            # socket to client and clients address .accept - accept connection
             client_connection, client_address = self.socket.accept()
             # accept(): Return a new socket representing the connection, and the address of the client
 
@@ -92,7 +93,7 @@ class Server:
                     response_headers = self._build_header(404)
                     response_content = open('.' + public_html + '404.html', 'rb').read()
 
-                str.replace("<% var %>", "was")
+                response_content.replace("<% var %>", "test")
                 server_response = response_headers.encode() + response_content
 
                 client_connection.sendall(server_response)

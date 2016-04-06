@@ -18,7 +18,8 @@ class PostRequest:
 
     def handle_request(self):
         # TODO: IndexError: list index out of range
-        args = self.request.split(' ')[1]  # take the required file and arguments
+        if len(self.request.split(' ')) > 1:
+            args = self.request.split(' ')[1]  # take the required file and arguments
 
         if len(args.split("?")) > 1:
             required_file = public_html + self._args_handler_cgi(args.split("?")[1])
