@@ -1,0 +1,12 @@
+#!/usr/bin/python
+
+import os
+
+# print header
+print('<title>Doc. Produced by CGI</title>')
+
+query_string = os.environ["QUERY_STRING"]
+key, value = os.environ["QUERY_STRING"].split('=')
+
+print "<h2> Method {0} </h2>".format(key)
+print "<p>Ok, new value = {0} </p>".format(int(value) + 1)

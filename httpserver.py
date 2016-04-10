@@ -4,29 +4,31 @@ import socket  # connection support
 import signal  # catch the ctrl + c
 import time  # access the current time
 import sys
+import os
 
 # module cgi
-import cgi_bin.cgi_bin
+import cgi_bin.cgi
+
 # module get request
 from methods_requisitions import get_method, post_method
 
+os.environ["HTTP_ROOT"] = "."
+
 public_html = "/public_html/"
 
-
 class Server:
-    def __init__(self, application, port=6565):
+    def __init__(self):
         """
         server's constructor
         :param port: port to connection
         """
-        self.application = application
         # factory socket
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # create a new socket object
         # flag tells the kernel to reuse a local socket in TIME_WAIT state,
         # without waiting for its natural timeout to expire.
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.host = '127.0.0.1'
-        self.port = port
+        self.port = 5050
         self.http_root = '.'  # Directory where web page files are stored
 
     def start_server(self):
@@ -79,7 +81,8 @@ class Server:
             print "content: %s " % request_string
 
             if method == 'GET':
-                required_file = self.http_root + get_method.GetRequest(request_string).handle_request()
+                required_file = self.run();
+                #required_file = self.http_root + get_method.GetRequest(request_string).handle_request()
 
                 print "required file {0}".format(required_file)
 
@@ -149,6 +152,25 @@ class Server:
         form = cgi_bin.cgi_bin.FieldStorage(args)
         return form["name"] + form.getvalue("prenome") + ".html"
 
+    def run(self):
+        # print header
+        print "Content-type: text/html\n\n"
+
+        query_string = os.environ["QUERY_STRING"]
+        print "<h2>Query string</h2>"
+        print "query_string: " + query_string + "<br>"
+
+        print "<h2>Argument list</h2>"
+        arg_list = query_string.split('&')
+        # print arg_list
+
+        i = 1
+        for arg in arg_list:
+            key, value = arg.split('=')
+            print "key " + str(i) + ": " + key + "<br>"
+            print"value " + str(i) + ": " + value + "<br>"
+            i += 1
+
 
 def signal_handler(sig, frame):
     """
@@ -167,5 +189,5 @@ signal.signal(signal.SIGINT, signal_handler)
 # method main
 if __name__ == '__main__':
     print 'starting web server...'
-    server = Server(5050)
+    server = Server()
     server.start_server()
