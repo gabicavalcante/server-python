@@ -6,9 +6,7 @@ Created:    04/04/2016
 Author:     Gabriela Cavalcante
 """
 
-import cgi_bin.cgi_bin
-
-public_html = "/public_html/"
+public_html = "/public/"
 
 
 class GetRequest:
@@ -35,11 +33,11 @@ class GetRequest:
     @staticmethod
     def _args_handler_cgi(args):
         """
-        Method to handle with the arguments by cgi_bin
+        Method to handle with the arguments by cgi-bin
         :param args: url arguments
         :return: file name
         """
-        form = cgi_bin.cgi_bin.FieldStorage(args)
+        form = cgi_bin.cgi2.run()
         if form.contains("type"):
             if form["type"] == "student":
                 return "student.html"

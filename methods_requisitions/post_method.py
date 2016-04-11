@@ -6,9 +6,7 @@ Created:    04/04/2016
 Author:     Gabriela Cavalcante
 """
 
-import cgi_bin.cgi_bin
-
-public_html = "/public_html/"
+public_html = "/public/"
 
 
 class PostRequest:
@@ -17,7 +15,6 @@ class PostRequest:
         pass
 
     def handle_request(self):
-        # TODO: IndexError: list index out of range
         if len(self.request.split(' ')) > 1:
             args = self.request.split(' ')[1]  # take the required file and arguments
 
@@ -35,11 +32,11 @@ class PostRequest:
     @staticmethod
     def _args_handler_cgi(args):
         """
-        Method to handle with the arguments by cgi_bin
+        Method to handle with the arguments by cgi-bin
         :param args: url arguments
         :return: file name
         """
-        form = cgi_bin.cgi_bin.FieldStorage(args)
+        form = cgi_bin.cgi_bin.FieldStorage(args, "post")
         if form.contains("student"):
             return "student.html"
         elif form.contains("teacher"):
