@@ -2,20 +2,13 @@
 
 import socket  # connection support
 import signal  # catch the ctrl + c
-import subprocess
 import time  # access the current time
 import sys
 import os
 
-# module cgi
-import cgi_bin.cgi2
+os.environ["HTTP_ROOT"] = "./public_html"
 
-# module get request
-from methods_requisitions import get_method, post_method
-
-os.environ["HTTP_ROOT"] = "./public"
-
-public_html = "/public/"
+public_html = "/public_html/"
 
 
 class Server:
