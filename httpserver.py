@@ -7,7 +7,7 @@ import time  # access the current time
 import sys
 import os
 
-os.environ["HTTP_ROOT"] = "./public"
+os.environ["HTTP_ROOT"] = "./public_html"
 
 
 class Server:
@@ -19,6 +19,9 @@ class Server:
         self.host = '127.0.0.1'  # host
         self.port = 5050  # port
         self.socket = None
+        # method the reboot port if it's used
+        # for now, it's not necessary
+        # reboot(self.port)
 
     def create_socket(self):
         # factory socket
@@ -82,9 +85,14 @@ class Server:
                 if 'cgi-bin' in request_string:
                     print "--- > request string " + request_string
                     required_file = '.' + request_string.split(' ')[1].split('?')[0]
-                    os.environ["QUERY_STRING"] = request_string.split(' ')[1].split('?')[1]
-                    p = subprocess.Popen(required_file, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                    response_content, err = p.communicate()
+                    if 'POST' in os.environ["REQUEST_METHOD"]:
+                        req_lines = request_string.splitlines()
+                        os.environ["QUERY_STRING"] = req_lines[-1]
+                    else:
+                        os.environ["QUERY_STRING"] = request_string.split(' ')[1].split('?')[1]
+
+                    process = subprocess.Popen(required_file, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    response_content, err = process.communicate()
                 else:
                     required_file = os.environ.get("HTTP_ROOT") + request_string.split(' ')[1]
                     print "required file {0}".format(required_file)
@@ -104,7 +112,8 @@ class Server:
             print "closing connection with client... bye"
             client_connection.close()
 
-    def _build_header(self, param):
+    @staticmethod
+    def _build_header(param):
         """
         Method to build a response header
         :param status: 200 if the page was found or 400 if not
@@ -137,25 +146,6 @@ class Server:
         for param in list_args:
             file_name += param.split('=')[1]
         return file_name + ".html"
-
-    def run(self):
-        # print header
-        print "Content-type: text/html\n\n"
-
-        query_string = os.environ["QUERY_STRING"]
-        print "<h2>Query string</h2>"
-        print "query_string: " + query_string + "<br>"
-
-        print "<h2>Argument list</h2>"
-        arg_list = query_string.split('&')
-        # print arg_list
-
-        i = 1
-        for arg in arg_list:
-            key, value = arg.split('=')
-            print "key " + str(i) + ": " + key + "<br>"
-            print"value " + str(i) + ": " + value + "<br>"
-            i += 1
 
 
 def signal_handler(sig, frame):

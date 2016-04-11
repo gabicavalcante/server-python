@@ -6,9 +6,9 @@ import time  # access the current time
 import sys
 import os
 
-os.environ["HTTP_ROOT"] = "./public"
+os.environ["HTTP_ROOT"] = "./public_html"
 
-public_html = "/public/"
+public_html = "/public_html/"
 
 
 class Server:

@@ -6,7 +6,7 @@ Created:    04/04/2016
 Author:     Gabriela Cavalcante
 """
 
-public_html = "/public/"
+public_html = "/public_html/"
 
 
 class PostRequest:
