@@ -1,0 +1,27 @@
+#!/usr/bin/python
+
+from xml.dom import minidom
+from xml.etree.ElementTree import Element, Comment, ElementTree
+import cgi_bin
+import inflect
+
+# print header
+print('<title>Doc. Produced by CGI</title>')
+
+form = cgi_bin.FieldStorage()
+print "<h2> Welcome </h2>"
+
+p = inflect.engine()
+string_convert = p.number_to_words(int(form["number"]))
+
+
+root = Element("string")
+
+comment = Comment('Number String')
+root.append(comment)
+
+root.text = string_convert
+
+rough_string = ElementTree.tostring(root, 'utf-8', method='xml')
+reparsed = minidom.parseString(rough_string)
+print reparsed.toprettyxml(indent="  ")
