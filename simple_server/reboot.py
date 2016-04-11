@@ -1,4 +1,11 @@
 def reboot(port):
+    """
+    Method to reboot port
+    source: http://stackoverflow.com/questions/7703797/need-to-close-python-socket-find-the-current-running-server-on-my-dev-environm
+    :param port:
+    :return:
+    """
+
     def decorator(f):
         import re
         import commands
