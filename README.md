@@ -9,8 +9,7 @@ source
 
 [methods python (underscore)](http://stackoverflow.com/questions/1301346/the-meaning-of-a-single-and-a-double-underscore-before-an-object-name-in-python)
 
-[socket listening](http://stackoverflow.com/questions/15869158/python-socket-listening)# server-python
-
+[socket listening](http://stackoverflow.com/questions/15869158/python-socket-listening)
 
 CGI
 
