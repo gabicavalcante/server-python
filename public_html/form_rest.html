@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+</head>
+<body>
+    <h2>NumberToWords [CGI-BIN REST]</h2>Returns the word corresponding to the positive number passed as parameter. Limited to quadrillions.<h3>Test</h3>
+        To test the operation using the HTTP POST protocol, click the 'Invoke' button.
+
+    <form name="testForm" id="testForm" target="_blank" action="cgi-bin/rest" method="POST">
+      <table frame="box" cellspacing="0" cellpadding="4" style="border-collapse: collapse;" rules="none">
+        <tr>
+          <td class="frmheader" style="border-right: 2px solid white;">Parameter</td><td class="frmheader">Value</td>
+        </tr>
+        <tr>
+          <td>ubiNum</td><td><input type="text" size="50" name="ubiNum"><i></i></td>
+        </tr>
+        <tr>
+          <td></td><td align="right"><input type="submit" value="Invoke" class="button"></td>
+        </tr>
+      </table>
+    </form>
+    <a href="/index.html">BACK</a>
+</body>
+</html>
