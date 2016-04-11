@@ -83,7 +83,6 @@ class Server:
 
             if len(request_string.split(' ')) >= 0:
                 if 'cgi-bin' in request_string:
-                    print "--- > request string " + request_string
                     required_file = '.' + request_string.split(' ')[1].split('?')[0]
                     if 'POST' in os.environ["REQUEST_METHOD"]:
                         req_lines = request_string.splitlines()
@@ -94,7 +93,8 @@ class Server:
                     process = subprocess.Popen(required_file, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                     response_content, err = process.communicate()
                 else:
-                    required_file = os.environ.get("HTTP_ROOT") + request_string.split(' ')[1]
+                    if len(request_string.split(' ')) > 1:
+                        required_file = os.environ.get("HTTP_ROOT") + request_string.split(' ')[1]
                     print "required file {0}".format(required_file)
 
                     try:

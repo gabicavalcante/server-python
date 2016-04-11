@@ -14,3 +14,6 @@ source
 CGI
 
 https://docs.python.org/3/library/cgi.html
+
+pip install inflect
+pip install lxml
