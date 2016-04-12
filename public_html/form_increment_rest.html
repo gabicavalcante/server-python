@@ -6,18 +6,18 @@
     <title>Form</title>
 </head>
 <body>
-    <h2>NumberToWords</h2>Returns the word corresponding to the positive number passed as parameter. Limited to quadrillions.<h3>Test</h3>
+    <h2>IncrementValue</h2>Returns the number incremented +1.<h3>Test</h3>
         To test the operation using the HTTP POST protocol, click the 'Invoke' button.
 
-    <form name="testForm" id="testForm" target="_blank" action="http://www.dataaccess.com/webservicesserver/numberconversion.wso/NumberToWords/XML" method="POST">
+    <form name="testForm" id="testForm" target="_blank" action="cgi-bin/incrementNum" method="POST">
       <table frame="box" cellspacing="0" cellpadding="4" style="border-collapse: collapse;" rules="none">
         <tr>
           <td class="frmheader" style="border-right: 2px solid white;">Parameter</td><td class="frmheader">Value</td>
         </tr>
         <tr>
-          <td>ubiNum</td>
+          <td>incrementNum</td>
             <td>
-                <input type="text" size="50" name="ubiNum"><i></i>
+                <input type="text" size="50" name="incrementNum"><i></i>
             </td>
         </tr>
         <tr>
