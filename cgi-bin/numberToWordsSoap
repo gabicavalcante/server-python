@@ -1,0 +1,32 @@
+#!/usr/bin/python
+import os
+import sys
+
+import inflect
+
+import xml.etree.ElementTree as ET
+
+from util.parser import build_xml
+
+
+def NumberToWords(value):
+    p = inflect.engine()
+    string_convert = p.number_to_words(value)
+    request = build_xml('NumberToWordsResponse', 'http://localhost:5050/cgi-bin/', 'NumberToWordsResult', string_convert, '/cgi-bin/numberToWordsSoap', 0)
+    print request
+
+
+# print os.environ["QUERY_STRING"]
+root = ET.fromstring(os.environ["QUERY_STRING"])
+method = ''
+value = 0
+for child in root:
+    for grand in child:
+        method = grand.tag.split("}")[1]
+        for value in grand:
+            value = int(value.text)
+
+possibles = globals().copy()
+possibles.update(locals())
+method = possibles.get(method)
+method(value)

@@ -86,7 +86,10 @@ class Server:
                     required_file = '.' + request_string.split(' ')[1].split('?')[0]
                     if 'POST' in os.environ["REQUEST_METHOD"]:
                         req_lines = request_string.splitlines()
-                        os.environ["QUERY_STRING"] = req_lines[-1]
+                        request_string = ""
+                        for index in range(req_lines.index(""), len(req_lines)):
+                            request_string += req_lines[index]
+                        os.environ["QUERY_STRING"] = request_string
                     else:
                         os.environ["QUERY_STRING"] = request_string.split(' ')[1].split('?')[1]
 
