@@ -132,35 +132,6 @@ class Server:
             file_name += param.split('=')[1]
         return file_name + ".html"
 
-    @staticmethod
-    def _args_handler_cgi(args):
-        """
-        Method to handle with the arguments by cgi-bin
-        :param args: url arguments
-        :return: file name
-        """
-        form = cgi_bin.cgi_bin.FieldStorage(args)
-        return form["name"] + form.getvalue("prenome") + ".html"
-
-    def run(self):
-        # print header
-        print "Content-type: text/html\n\n"
-
-        query_string = os.environ["QUERY_STRING"]
-        print "<h2>Query string</h2>"
-        print "query_string: " + query_string + "<br>"
-
-        print "<h2>Argument list</h2>"
-        arg_list = query_string.split('&')
-        # print arg_list
-
-        i = 1
-        for arg in arg_list:
-            key, value = arg.split('=')
-            print "key " + str(i) + ": " + key + "<br>"
-            print"value " + str(i) + ": " + value + "<br>"
-            i += 1
-
 
 def signal_handler(sig, frame):
     """
