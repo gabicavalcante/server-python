@@ -51,7 +51,8 @@ $ server_http_root
 │   └── simple_server.py 
 ├── thread
 │   ├── __init__.py
-│   └── ClientThread.py 
+│   ├── Client.py
+│   └── ServerThread.py
 ├── util
 │   ├── __init__.py
 │   ├── parser.py 
