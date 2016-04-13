@@ -19,6 +19,8 @@ class Server:
         self.host = '127.0.0.1'  # host
         self.port = 5050  # port
         self.socket = None
+        self.size = 1024
+        self.backlog = 5
         # method the reboot port if it's used
         # for now, it's not necessary
         # reboot(self.port)
@@ -38,7 +40,7 @@ class Server:
             self.create_socket()
             print "Serving HTTP on port %s | host %s " % (self.port, self.host)
             self.socket.bind((self.host, self.port))  # bind the socket to a local address
-            self.socket.listen(5)  # maximum number of connections
+            self.socket.listen(self.backlog)  # maximum number of connections
         except Exception as exc:
             print "Exception %s " % exc
             self.shutdown()
@@ -71,7 +73,7 @@ class Server:
 
             print "connection from: {0}' ".format(client_address)
 
-            request = client_connection.recv(1024)  # receive the client data
+            request = client_connection.recv(self.size)  # receive the client data
             request_string = bytes.decode(request)  # decode the request to string
 
             # get the first word in the request

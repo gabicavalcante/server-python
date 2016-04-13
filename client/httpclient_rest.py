@@ -31,6 +31,7 @@ s.send(REQUEST_REST)
 reply = s.recv(BUFFER_SIZE)
 print reply
 
+
 def signal_handler(sig, frame):
     """
     Signal handler to stop the program if the
@@ -42,6 +43,7 @@ def signal_handler(sig, frame):
     print('stopping the client...')
     s.close()
     sys.exit(0)
+
 
 signal.signal(signal.SIGINT, signal_handler)
 s.close()

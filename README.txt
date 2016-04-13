@@ -80,6 +80,7 @@ There is a file with a simple server made to the first TD in 'simple_server/simp
 FEATURES
 ---------
 
+* MultiThreaded Server [thread/ServerThread.py] and Client [thread/Client] to test the server.
 * I chosen the xml to the rest response. 
 * I made a cgi-bin script to handle with the arguments [cgi-bin/cgi-bin.py]. This script is used by all script cgi-bin.
 * There are a simple parser to create the rest and soap responses
