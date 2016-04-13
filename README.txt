@@ -10,10 +10,12 @@ ID:     cg507563
 Course: SI - 3
 Group:  1
 
+
 ABOUT
 -----
 
 This project was made according to the constraints gave us in the TD of "Réseaux et Programmation". 
+
 
 STRUCTURE
 ---------
@@ -77,6 +79,7 @@ We can find too a script to rest and soap client that will use the cgi-bin scrip
 
 There is a file with a simple server made to the first TD in 'simple_server/simple_server.py'.
 
+
 FEATURES
 ---------
 
@@ -91,13 +94,13 @@ FEATURES
 Documentation
 -------------
 
-The code is documentation was made by comments in all code.
+The code documentation was made by comments in all code.
 
 
 Dependencies
 ------------
 
-Will necessary install some dependences to run the projetct:
+Will necessary install some dependencies to run the project:
 
 - pip install inflect 
 
