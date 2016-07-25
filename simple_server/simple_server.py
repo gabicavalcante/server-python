@@ -2,13 +2,33 @@
 
 import socket  # connection support
 import signal  # catch the ctrl + c
+import subprocess
 import time  # access the current time
 import sys
 import os
 
 os.environ["HTTP_ROOT"] = "./public_html"
 
-public_html = "/public_html/"
+
+def _build_header(param):
+    """
+    Method to build a response header
+    :param status: 200 if the page was found or 400 if not
+    :return: a response header
+    """
+    header = ""
+    if param == 200:
+        header = 'HTTP/1.0 200 OK\n'
+    elif param == 404:
+        header = 'HTTP/1.1 404 Not Found\n'
+
+    current_time = time.strftime("%a, %d %b %Y %H:%M:%S", time.localtime())
+    header += 'Date: ' + current_time + '\n'
+    header += 'Server: Unice\n'
+    header += 'MIME-version: 1.0\n'
+    header += 'Content-type: text/html\n'
+
+    return header
 
 
 class Server:
@@ -17,8 +37,8 @@ class Server:
         server's constructor
         :param port: port to connection
         """
-        self.host = '127.0.0.1' # host
-        self.port = 5050 # port
+        self.host = '127.0.0.1'  # host
+        self.port = 5051  # port
         self.http_root = '.'  # Directory where web page files are stored
         self.socket = None
 
@@ -74,49 +94,40 @@ class Server:
             request_string = bytes.decode(request)  # decode the request to string
 
             # get the first word in the request
-            method = request_string.split(' ')[0]
-            print "method: %s " % method
+            os.environ["REQUEST_METHOD"] = request_string.split(' ')[0]
+            print "method: %s " % os.environ["REQUEST_METHOD"]
             print "content: %s " % request_string
+            response_headers = ''
+            response_content = ''
 
-            required_file = os.environ.get("HTTP_ROOT") + request_string.split(' ')[1]
+            if len(request_string.split(' ')) >= 0:
+                if 'cgi-bin' in request_string:
+                    required_file = '.' + request_string.split(' ')[1].split('?')[0]
+                    if 'GET' in os.environ["REQUEST_METHOD"]:
+                        os.environ["QUERY_STRING"] = request_string.split(' ')[1].split('?')[1]
 
-            print "required file {0}".format(required_file)
+                        process = subprocess.Popen(required_file, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                        response_content, err = process.communicate()
 
-            try:
-                file_response = open(required_file, 'rb')
-                response_content = file_response.read()
-                file_response.close()
-                response_headers = self._build_header(200)
-            except Exception as exc:
-                print "exception to open the file in the server {0}".format(exc)
-                response_headers = self._build_header(404)
-                response_content = open(os.environ.get("HTTP_ROOT") + '/404.html', 'rb').read()
+                else:
+                    if len(request_string.split(' ')) > 1:
+                        required_file = os.environ.get("HTTP_ROOT") + request_string.split(' ')[1]
+                    print "required file {0}".format(required_file)
 
-            server_response = response_headers.encode() + response_content
+                    try:
+                        file_response = open(required_file, 'rb')
+                        response_headers = _build_header(200)
+                        response_content = file_response.read()
+                        file_response.close()
+                    except Exception as exc:
+                        print "exception to open the file in the server {0}".format(exc)
+                        response_headers = _build_header(404)
+                        response_content = open(os.environ.get("HTTP_ROOT") + '/404.html', 'rb').read()
 
-            client_connection.sendall(server_response)
-            print "closing connection with client... bye"
-            client_connection.close()
-
-    def _build_header(self, param):
-        """
-        Method to build a response header
-        :param status: 200 if the page was found or 400 if not
-        :return: a response header
-        """
-        header = ""
-        if param == 200:
-            header = 'HTTP/1.0 200 OK\n'
-        elif param == 404:
-            header = 'HTTP/1.1 404 Not Found\n'
-
-        current_time = time.strftime("%a, %d %b %Y %H:%M:%S", time.localtime())
-        header += 'Date: ' + current_time + '\n'
-        header += 'Server: Unice\n'
-        header += 'MIME-version: 1.0\n'
-        header += 'Content-type: text/html\n'
-
-        return header
+                server_response = response_headers.encode() + response_content
+                client_connection.sendall(server_response)
+                print "closing connection with client... bye"
+                client_connection.close()
 
     @staticmethod
     def _args_handler(args):

@@ -1,0 +1,11 @@
+#!/usr/bin/python
+
+import cgi_bin
+
+# print header
+print('<title>Doc. Produced by CGI</title>')
+
+form = cgi_bin.FieldStorage()
+print "<h2> Welcome </h2>"
+
+print "<p>Hi, " + form["user"] + " </p>"

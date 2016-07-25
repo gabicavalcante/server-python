@@ -49,6 +49,10 @@ $ server_http_root
 │   ├── form_rest_test.html
 │   └── index.html
 ├── simple_server
+│   ├── cgi-bin
+│   │   ├── __init__.py
+│   │   ├── cgi_bin.py
+│   │   └── welcome
 │   ├── __init__.py
 │   └── simple_server.py 
 ├── thread
@@ -75,7 +79,7 @@ A link to a rest form that will use the cgi-bin script 'numberToWords'. And a li
 that will call the cgi-bin script 'incrementNum'.
 
 In the client directory we can find a script to a soap client (the rest client was implemented in the form_increment_rest.html).
-We can find too a script to rest and soap client that will use the cgi-bin script 'numberToWords' (rest) and 'numberToWordsSoap' (soap).
+We can find too a script to rest and soap server that will use the cgi-bin script 'numberToWords' (rest) and 'numberToWordsSoap' (soap).
 
 There is a file with a simple server made to the first TD in 'simple_server/simple_server.py'.
 
@@ -100,7 +104,7 @@ The code documentation was made by comments in all code.
 Dependencies
 ------------
 
-Will necessary install some dependencies to run the project:
+It's necessary install some dependencies to run the project:
 
 - pip install inflect 
 

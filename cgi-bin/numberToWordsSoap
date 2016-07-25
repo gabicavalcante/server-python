@@ -9,7 +9,7 @@ from util.parser import build_xml
 def NumberToWords(value):
     p = inflect.engine()
     string_convert = p.number_to_words(value)
-    request = build_xml('NumberToWordsResponse', 'http://localhost:5050/cgi-bin/', 'NumberToWordsResult', string_convert, '/cgi-bin/numberToWordsSoap', 0)
+    request = build_xml('NumberToWordsResponse', 'http://localhost:5050/cgi-bin/', 'NumberToWordsResult', string_convert, '/cgi-bin/numberToWordsSoap', 'http://localhost:5050', 0)
     print request
 
 

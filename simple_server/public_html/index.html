@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Doc. Produced by a CGI</title>
+</head>
+<body>
+    <div class="container">
+        <h1>App Server Test</h1>
+
+        <p>Are you...</p>
+
+        <form action="cgi-bin/welcome" method="get">
+            <div class="radio">
+              <label>
+                <input type="radio" name="user" value="teacher" id="optionsRadios1" checked>
+                teacher
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="user" value="student" id="optionsRadios2">
+                student
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
